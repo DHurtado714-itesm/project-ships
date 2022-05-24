@@ -1,8 +1,8 @@
 // =========================================================
 // File: container.h
-// Author:
-// Date:
-// Description:
+// Author: Daniel Felipe Hurtado
+// Date: 24 / 05 / 2022
+// Description: 
 // =========================================================
 #ifndef CONTAINER_H
 #define CONTAINER_H
@@ -29,5 +29,35 @@ public:
 
   virtual double getConsumption() const = 0;
 };
+
+// Constructor with 3 parameters
+
+Container::Container(int _id, int _weight, ContainerType _type){
+  id = _id;
+  weight = _weight;
+  type = _type;
+}
+
+// Copy constructor
+
+Container::Container(const Container &other){
+  id = other.id;
+  weight = other.weight;
+  type = other.type;
+}
+
+// Getters
+
+ContainerType Container::getType() const{
+  return type;
+}
+
+int Container::getId() const{
+  return id;
+}
+
+int Container::getWeight() const{
+  return weight;
+}
 
 #endif
