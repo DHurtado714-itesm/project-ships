@@ -1,0 +1,34 @@
+Ideas principales:
+
+- Sistema de gestion portuaria
+Objetivo: analizar las solicitudes proporcionadas en el archivo de entrada y llevar a cabo las acciones necesarias.
+
+Container
+    
+
+Ships:
+Transportan:
+    Contenedores
+        ligeros
+        pesados
+        refigerados
+        liquidos
+
+        Cargar
+        Descargar
+
+Atributos:
+    Combustible(Suficiente para navegar de un puerto a otro)
+
+Usuario:
+    No hay interaccion
+
+Inputs:
+    Archivos de entrada
+
+Outputs:
+    Archivos de salida
+
+Clases
+    Hacer los calculos mediante las clases dentro de los headers
+

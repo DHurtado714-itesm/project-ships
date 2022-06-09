@@ -60,4 +60,40 @@ int Container::getWeight() const{
   return weight;
 }
 
+// Operator overcharge
+
+bool Container::operator==(const Container *right){
+  
+  return(id == right->getId() && weight == right->getWeight() && type == right->getType());
+
+}
+
+bool Container::operator==(const Container &right){
+  
+  return(id == right.getId() && weight == right.getWeight() && type == right.getType());
+
+}
+
+bool Container::operator<(const Container *right){
+  
+  if(type == right->getType() && id < right->getId()){
+    return true;
+
+  }else if (type != right->getType() && type < right->getType()){
+    return true;
+  }
+  
+}
+
+bool Container::operator<(const Container &right){
+  
+  if(type == right.getType() && id < right.getId()){
+    return true;
+
+  }else if (type != right.getType() && type < right.getType()){
+    return true;
+  }
+  
+}
+
 #endif

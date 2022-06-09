@@ -1,8 +1,8 @@
 // =========================================================
 // File: heavy.h
-// Author:
-// Date:
-// Description:
+// Author: Daniel Felipe Hurtado
+// Date: 1 / 07 / 2022
+// Description: 
 // =========================================================
 #ifndef HEAVY_H
 #define HEAVY_H
