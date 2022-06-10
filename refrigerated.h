@@ -1,8 +1,8 @@
 // =========================================================
 // File: refrigerated.h
-// Author:
-// Date:
-// Description:
+// Author: Daniel Felipe Hurtado Giraldo
+// Date: 07 / 10 / 2022
+// Description: 
 // =========================================================
 #ifndef REFRIGERATED_H
 #define REFRIGERATED_H
@@ -17,19 +17,9 @@ public:
   double getConsumption() const;
 };
 
-RefrigeratedContainer::RefrigeratedContainer(int _id, int _weight) : HeavyContainer(id, weight) {
-  
-  id = _id;
-  weight = _weight;
-  
-}
+RefrigeratedContainer::RefrigeratedContainer(int _id, int _weight) : HeavyContainer(_id, _weight) {}
 
-RefrigeratedContainer::RefrigeratedContainer(const RefrigeratedContainer &other) : HeavyContainer(other){
-  
-  id = other.id;
-  weight = other.weight;
-
-}
+RefrigeratedContainer::RefrigeratedContainer(const RefrigeratedContainer &other) : HeavyContainer(other){}
 
 double RefrigeratedContainer::getConsumption() const{
   return weight * 5;
