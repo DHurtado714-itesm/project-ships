@@ -9,24 +9,32 @@
 
 #include "container.h"
 
+using namespace std;
+
+typedef enum{LIGHT, HEAVY, REFRIGERATED, LIQUID} ContainerType;
+
 class LightContainer : public Container {
 public:
-  LightContainer(int, int);
+  LightContainer(int, int, ContainerType) : Container(id, weight, type){};
   LightContainer(const LightContainer&);
 
   double getConsumption() const;
 };
 
-LightContainer::LightContainer(int _id, int _weight){
+LightContainer::LightContainer(int _id, int _weight, ContainerType _type) : Container(id, weight, type) {
   id = _id;
   weight = _weight;
   
   ContainerType _type = LIGHT;
   type = _type;
-} // Corregir
+}
 
-LightContainer::Container(){
+// Copy constructor
 
+LightContainer::LightContainer(const LightContainer &other) : Container(other){
+  id = other.id;
+  weight = other.weight;
+  type = other.type;
 }
 
 // Getters
@@ -39,12 +47,14 @@ int LightContainer::getId() const{
   return id;
 }
 
-int LightContainer::getWeight() const{
+int LightContainer::getLightWeight() const{
+  getweight();
+  
   return weight;
 }
 
-double getConsumption() const{
-  // Consumo = container weight *  2.5
+double LightContainer::getConsumption() const{
+  return weight * 2.5;
 }
 
 #endif
