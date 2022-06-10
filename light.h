@@ -11,13 +11,13 @@
 
 class LightContainer : public Container {
 public:
-  LightContainer(int, int, ContainerType);
+  LightContainer(int, int);
   LightContainer(const LightContainer&);
 
   double getConsumption() const;
 };
 
-LightContainer::LightContainer(int _id, int _weight, ContainerType _type) : Container(_id, _weight, LIGHT) {}
+LightContainer::LightContainer(int _id, int _weight) : Container(_id, _weight, LIGHT) {}
 
 // Copy constructor
 

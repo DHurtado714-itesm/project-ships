@@ -17,7 +17,7 @@ public:
   double getConsumption() const;
 };
 
-RefrigeratedContainer::RefrigeratedContainer(int _id, int _weight) : HeavyContainer(_id, _weight) {}
+RefrigeratedContainer::RefrigeratedContainer(int _id, int _weight) : HeavyContainer(_id, _weight, REFRIGERATED) {}
 
 RefrigeratedContainer::RefrigeratedContainer(const RefrigeratedContainer &other) : HeavyContainer(other){}
 

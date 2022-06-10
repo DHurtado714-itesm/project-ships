@@ -34,6 +34,9 @@ public:
 
 Container::Container(int _id, int _weight, ContainerType _type){
   id = _id;
+  if (_weight< 0){
+    _weight = 0;
+  }
   weight = _weight;
   type = _type;
 }
@@ -69,9 +72,7 @@ bool Container::operator==(const Container *right){
 }
 
 bool Container::operator==(const Container &right){
-  
   return(id == right.getId() && weight == right.getWeight() && type == right.getType());
-
 }
 
 bool Container::operator<(const Container *right){
@@ -81,6 +82,8 @@ bool Container::operator<(const Container *right){
 
   }else if (type != right->getType() && type < right->getType()){
     return true;
+  } else{
+    return false;
   }
   
 }
@@ -92,6 +95,8 @@ bool Container::operator<(const Container &right){
 
   }else if (type != right.getType() && type < right.getType()){
     return true;
+  } else {
+    return false;
   }
   
 }

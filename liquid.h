@@ -17,7 +17,7 @@ public:
   double getConsumption() const;
 };
 
-LiquidContainer::LiquidContainer(int _id, int _weight) : HeavyContainer(_id, _weight) {}
+LiquidContainer::LiquidContainer(int _id, int _weight) : HeavyContainer(_id, _weight, LIQUID) {}
 
 LiquidContainer::LiquidContainer(const LiquidContainer &other) : HeavyContainer(other){}
 

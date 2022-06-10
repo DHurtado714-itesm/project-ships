@@ -92,7 +92,7 @@ std::list<SimpleShip*> Port::getCurrent() const{
 
 double Port::getDistance(Port*other) const{
   return(sqrt(pow((x - other->x), 2) + pow((y - other->y), 2)));
-} // Preguntarle al profe, por que no funciona el acesso de este puntero
+}
 
 //Low key
 void Port::incomingShip(SimpleShip *ship){
