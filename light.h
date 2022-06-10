@@ -11,22 +11,16 @@
 
 using namespace std;
 
-typedef enum{LIGHT, HEAVY, REFRIGERATED, LIQUID} ContainerType;
 
 class LightContainer : public Container {
 public:
-  LightContainer(int, int, ContainerType) : Container(id, weight, type){};
+  LightContainer(int, int, ContainerType);
   LightContainer(const LightContainer&);
 
   double getConsumption() const;
 };
 
-LightContainer::LightContainer(int _id, int _weight, ContainerType _type) : Container(id, weight, type) {
-  id = _id;
-  weight = _weight;
-  
-  ContainerType _type = LIGHT;
-  type = _type;
+LightContainer::LightContainer(int _id, int _weight, ContainerType _type) : Container(id, weight, LIGHT) {
 }
 
 // Copy constructor
@@ -37,21 +31,6 @@ LightContainer::LightContainer(const LightContainer &other) : Container(other){
   type = other.type;
 }
 
-// Getters
-
-ContainerType LightContainer::getType() const{
-  return type;
-}
-
-int LightContainer::getId() const{
-  return id;
-}
-
-int LightContainer::getLightWeight() const{
-  getweight();
-  
-  return weight;
-}
 
 double LightContainer::getConsumption() const{
   return weight * 2.5;

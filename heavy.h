@@ -19,27 +19,21 @@ public:
 };
 
 
-HeavyContainer::HeavyContainer(int _id, int _weight, ContainerType _type) : Container(id, weight, type) {
-  id = _id;
-  weight = _weight;
-  
-  ContainerType _type = HEAVY;
-  type = _type;
+HeavyContainer::HeavyContainer(int _id, int _weight) : Container(_id, _weight, HEAVY){
+
+}
+
+HeavyContainer::HeavyContainer(int _id, int _weight, ContainerType _type) : Container(_id, _weight, _type) {
 }
 
 // Copy constructor
 
 HeavyContainer::HeavyContainer(const HeavyContainer &other) : Container(other){
-  id = other.id;
-  weight = other.weight;
-  type = other.type;
+
 }
 
-// Getters
-//{}
 
-
-double LightContainer::getConsumption() const{
+double HeavyContainer::getConsumption() const{
   return weight * 3;
 }
 
