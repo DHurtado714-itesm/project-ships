@@ -18,24 +18,16 @@ public:
   double getConsumption() const;
 };
 
+HeavyContainer::HeavyContainer(int _id, int _weight) : Container(_id, _weight, HEAVY){}
 
-HeavyContainer::HeavyContainer(int _id, int _weight) : Container(_id, _weight, HEAVY){
-
-}
-
-HeavyContainer::HeavyContainer(int _id, int _weight, ContainerType _type) : Container(_id, _weight, _type) {
-}
+HeavyContainer::HeavyContainer(int _id, int _weight, ContainerType _type) : Container(_id, _weight, _type) {}
 
 // Copy constructor
 
-HeavyContainer::HeavyContainer(const HeavyContainer &other) : Container(other){
-
-}
-
+HeavyContainer::HeavyContainer(const HeavyContainer &other) : Container(other){}
 
 double HeavyContainer::getConsumption() const{
   return weight * 3;
 }
-
 
 #endif

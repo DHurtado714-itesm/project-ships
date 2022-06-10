@@ -9,9 +9,6 @@
 
 #include "container.h"
 
-using namespace std;
-
-
 class LightContainer : public Container {
 public:
   LightContainer(int, int, ContainerType);
@@ -20,17 +17,11 @@ public:
   double getConsumption() const;
 };
 
-LightContainer::LightContainer(int _id, int _weight, ContainerType _type) : Container(id, weight, LIGHT) {
-}
+LightContainer::LightContainer(int _id, int _weight, ContainerType _type) : Container(_id, _weight, LIGHT) {}
 
 // Copy constructor
 
-LightContainer::LightContainer(const LightContainer &other) : Container(other){
-  id = other.id;
-  weight = other.weight;
-  type = other.type;
-}
-
+LightContainer::LightContainer(const LightContainer &other) : Container(other){}
 
 double LightContainer::getConsumption() const{
   return weight * 2.5;
