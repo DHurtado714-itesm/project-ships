@@ -1,7 +1,7 @@
 // =========================================================
 // File: ship.h
-// Author:
-// Date:
+// Author: Daniel Felipe Hurtado Giraldo
+// Date: 07 / 10 / 2022
 // Description:
 // =========================================================
 #ifndef SHIP_H
@@ -60,5 +60,33 @@ public:
 
   std::string toString() const;
 };
+
+Ship::Ship(int _id, Port*, int _totalWeight, int _maxNumberOfAllContainers, int _maxNumberOfHeavyContainers, int _maxNumberOfRefrigeratedContainers,int _maxNumberOfLiquidContainers, double _fuelConsumptionPerKM) : SimpleShip(_id){
+
+}
+
+Ship::Ship(const Ship &ohter) : SimpleShip(other){
+
+}
+
+// Getters
+
+int Ship::getCurrentWeight() const{return currentWeight;}
+int Ship::getTotalWeight() const{return totalWeight;}
+int Ship::getCurrentNumberOfAllContainers() const{return currentNumberOfAllContainers;}
+int Ship::getMaxNumberOfAllContainers() const{return maxNumberOfAllContainers;}
+int Ship::getCurrentNumberOfHeavyContainers() const{return currentNumberOfHeavyContainers;}
+int Ship::getMaxNumberOfHeavyContainers() const{return maxNumberOfHeavyContainers;}
+int Ship::getCurrentNumberOfRefrigeratedContainers() const{return currentNumberOfRefrigeratedContainers;}
+int Ship::getMaxNumberOfRefrigeratedContainers() const{return maxNumberOfRefrigeratedContainers;}
+int Ship::getCurrentNumberOfLiquidContainers() const{return currentNumberOfLiquidContainers;}
+int Ship::getMaxNumberOfLiquidContainers() const{return maxNumberOfLiquidContainers;}
+double Ship::getFuel() const{return fuel;}
+double Ship::getFuelConsumptionPerKM() const{return fuelConsumptionPerKM;}
+Port* getCurrentPort() const;
+std::list<Container*> getCurrentContainers() const;
+
+// Methods
+
 
 #endif
