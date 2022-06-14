@@ -34,7 +34,7 @@ public:
 
 Container::Container(int _id, int _weight, ContainerType _type){
   id = _id;
-  if (_weight< 0){
+  if (_weight < 0){
     _weight = 0;
   }
   weight = _weight;
