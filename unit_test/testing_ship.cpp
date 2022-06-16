@@ -106,7 +106,7 @@ TEST_CASE("testing load", "[load(Container*)]") {
 
 	result = s1.load(&c2);
 	REQUIRE(result == true);
-	REQUIRE(s1.getCurrentWeight() == 3500.0);
+	REQUIRE(s1.getCurrentWeight() == 3500.0); // Preguntar, porque retorna un double si se incia en entero.
 	REQUIRE(s1.getCurrentNumberOfAllContainers() == 1);
 	REQUIRE(s1.getCurrentNumberOfHeavyContainers() == 1);
 	REQUIRE(s1.getCurrentNumberOfRefrigeratedContainers() == 0);

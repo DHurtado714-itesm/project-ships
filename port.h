@@ -25,7 +25,7 @@ private:
   double x, y;
   std::list<Container*> containers; // list of containers
   std::list<SimpleShip*> history; // ships that have been in port
-  std::list<SimpleShip*> current; // ships in port
+  std::list<SimpleShip*> current; // ships in port, modified from template
 
 public:
   Port(int, double, double);
@@ -131,25 +131,31 @@ void Port::remove(Container* container){
 std::string Port::toString() const{
   stringstream data; // Stream of information
 
-  int ilight = 0, iheavy = 0, irefri = 0, iliquid = 0; // Define iterators
+  string id_light = "", id_heavy = "", id_refri = "", id_liquid = ""; // Define iterators
+
+  data << "Port " << id << ": (" << x << ", " << y << ")"<< "\n";
 
   for(Container* iterator:containers){ // Use the position of Container type, to difine the container
-    if(iterator->getType() == 0){ // Use funtion get type, to retrieved the type of container
-      ilight++;
-    } else if (iterator->getType() == 1){
-      iheavy++;
-    } else if (iterator->getType() == 2){
-      irefri++;
+    if(iterator->getType() == LIGHT){ // Use funtion get type, to retrieved the type of container
+      id_light += std::to_string(iterator->getId());
+      id_light += " ";
+    } else if (iterator->getType() == HEAVY){
+      id_heavy += std::to_string(iterator->getId());
+      id_light += " ";
+    } else if (iterator->getType() == REFRIGERATED){
+      id_refri += std::to_string(iterator->getId());
+      id_light += " ";
     } else{
-      iliquid++;
+      id_liquid += std::to_string(iterator->getId());
+      id_light += " ";
     }
   }
 
-  data << "Port " << id << ": (" << x << ", " << y << ")"<< "\n";
-  data << "\t" << "Light Containers: " << ilight << "\n";
-  data << "\t" << "Heavy Containers: " << iheavy << "\n";
-  data << "\t" << "Refrigerated Containers: " << irefri << "\n";
-  data << "\t" << "Liquid Containers: " << iliquid << "\n";
+
+  data << "\t" << "Light Containers: " << id_light << "\n";
+  data << "\t" << "Heavy Containers: " << id_heavy << "\n";
+  data << "\t" << "Refrigerated Containers: " << id_refri << "\n";
+  data << "\t" << "Liquid Containers: " << id_liquid << "\n";
   
   for(SimpleShip* iterator:current){
     data << iterator->toString();
