@@ -7,7 +7,7 @@
 #ifndef PORT_H
 #define PORT_H
 
-
+#include <iostream>
 #include <list>
 #include <cmath>
 #include <string>
@@ -66,15 +66,11 @@ Port::Port(const Port &other){
 // Getters
 
 int Port::getId() const{return id;}
-
 double Port::getX() const{return x;}
-
 double Port::getY() const{return y;}
 
 std::list<Container*> Port::getContainers() const{return containers;}
-
 std::list<SimpleShip*> Port::getHistory() const{return history;}
-
 std::list<SimpleShip*> Port::getCurrent() const{return current;}
 
 // distance
@@ -83,17 +79,12 @@ double Port::getDistance(Port*other) const{
   return(sqrt(pow((x - other->x), 2) + pow((y - other->y), 2)));
 }
 
-//Low key
-
 void Port::incomingShip(SimpleShip *ship){
-
-  std::list<SimpleShip*>::iterator aship = find(current.begin(), current.end(), ship);
-
-  if(aship != current.end()){
-    return;
-  }
-
-  current.push_back(ship);
+  std::list<SimpleShip*>::iterator itr;
+  itr = find(current.begin(), current.end(), ship);
+    if(itr == current.end()){
+      current.push_back(ship);
+    }
 }
 
 void Port::outgoingShip(SimpleShip *ship){
@@ -111,13 +102,10 @@ void Port::outgoingShip(SimpleShip *ship){
 
 bool Port::contains(Container *container){
   std::list<Container*>::iterator acontainer = find(containers.begin(), containers.end(), container);
-
   if(acontainer != containers.end()){
     return true;
   }
-  
   return false;
-
 }
 
 void Port::add(Container* container){
@@ -129,39 +117,54 @@ void Port::remove(Container* container){
 }
 
 std::string Port::toString() const{
-  stringstream data; // Stream of information
+  std::list<SimpleShip*>::iterator i;
+  
+  stringstream port_data; // Stream of information
 
   string id_light = "", id_heavy = "", id_refri = "", id_liquid = ""; // Define iterators
 
-  data << "Port " << id << ": (" << x << ", " << y << ")"<< "\n";
+  port_data << "Port " << id << std::fixed << std::setprecision(2) << ": (" << x << std::fixed << std::setprecision(2) << ", " << y << ")"<< "\n";
 
   for(Container* iterator:containers){ // Use the position of Container type, to difine the container
     if(iterator->getType() == LIGHT){ // Use funtion get type, to retrieved the type of container
       id_light += std::to_string(iterator->getId());
       id_light += " ";
-    } else if (iterator->getType() == HEAVY){
+    }
+  }
+  for(Container* iterator:containers){
+    if(iterator->getType() == HEAVY){ // Use funtion get type, to retrieved the type of container
       id_heavy += std::to_string(iterator->getId());
-      id_light += " ";
-    } else if (iterator->getType() == REFRIGERATED){
-      id_refri += std::to_string(iterator->getId());
-      id_light += " ";
-    } else{
-      id_liquid += std::to_string(iterator->getId());
-      id_light += " ";
+      id_heavy += " ";
     }
   }
 
-
-  data << "\t" << "Light Containers: " << id_light << "\n";
-  data << "\t" << "Heavy Containers: " << id_heavy << "\n";
-  data << "\t" << "Refrigerated Containers: " << id_refri << "\n";
-  data << "\t" << "Liquid Containers: " << id_liquid << "\n";
-  
-  for(SimpleShip* iterator:current){
-    data << iterator->toString();
+  for(Container* iterator:containers){
+    if(iterator->getType() == REFRIGERATED){ // Use funtion get type, to retrieved the type of container
+      id_refri += std::to_string(iterator->getId());
+      id_refri += " ";
+  }
   }
 
-  return data.str();
+  for(Container* iterator:containers){
+    if(iterator->getType() == LIQUID){ // Use funtion get type, to retrieved the type of container
+      id_liquid += std::to_string(iterator->getId());
+      id_liquid += " ";
+    }
+  }
+
+  port_data << "\t" << "Light Containers: " << id_light << "\n";
+  port_data << "\t" << "Heavy Containers: " << id_heavy << "\n";
+  port_data << "\t" << "Refrigerated Containers: " << id_refri << "\n";
+  port_data << "\t" << "Liquid Containers: " << id_liquid << "\n";
+  
+
+  for(SimpleShip* iterator:current){
+    port_data << iterator->toString();
+  }
+
+  port_data << "\n";
+
+  return port_data.str();
 }
 
 #endif

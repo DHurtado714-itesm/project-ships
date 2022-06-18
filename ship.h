@@ -91,6 +91,8 @@ Ship::Ship(int _id, Port* _Port, int _totalWeight, int _maxNumberOfAllContainers
 
   fuel = 0.0;
   fuelConsumptionPerKM = _fuelConsumptionPerKM;
+
+  currentPort->incomingShip(this);
 }
 
 Ship::Ship(const Ship &other) : SimpleShip(other){
@@ -258,31 +260,45 @@ bool Ship::unLoad(Container *container){
 
 std::string Ship::toString() const{
   stringstream ship_data; // Stream of information
+  ship_data << "\tShip " << id << ": "<< std::fixed << std::setprecision(2) << fuel << "\n";
 
   string id_light = "", id_heavy = "", id_refri = "", id_liquid = ""; // Define iterators
 
-  for(Container* iterator:containers){ // Use the position of Container type, to difine the container
-    if(iterator->getType() == LIGHT){ // Use funtion get type, to retrieved the type of container
-      id_light += std::to_string(iterator->getId());
-      id_light += " ";
-    } else if (iterator->getType() == HEAVY){
-      id_heavy += std::to_string(iterator->getId());
-      id_light += " ";
-    } else if (iterator->getType() == REFRIGERATED){
-      id_refri += std::to_string(iterator->getId());
-      id_light += " ";
-    } else{
-      id_liquid += std::to_string(iterator->getId());
-      id_light += " ";
+  if(containers.size() != 0){
+    std::list<Container*>::const_iterator iterator;
+
+    for(Container* iterator:containers){ // Use the position of Container type, to difine the container
+      if(iterator->getType() == LIGHT){ // Use funtion get type, to retrieved the type of container
+        id_light += std::to_string(iterator->getId());
+        id_light += " ";
+      }
     }
+    ship_data << "\t\t" << "Light Containers: " << id_light << "\n";
+
+    for(Container* iterator:containers){
+      if(iterator->getType() == HEAVY){ // Use funtion get type, to retrieved the type of container
+        id_heavy += std::to_string(iterator->getId());
+        id_heavy += " ";
+      }
+    }
+    ship_data << "\t\t" << "Heavy Containers: " << id_heavy << "\n";
+
+    for(Container* iterator:containers){
+      if(iterator->getType() == REFRIGERATED){ // Use funtion get type, to retrieved the type of container
+        id_refri += std::to_string(iterator->getId());
+        id_refri += " ";
+      }
+    }
+    ship_data << "\t\t" << "Refrigerated Containers: " << id_refri << "\n";
+
+    for(Container* iterator:containers){
+      if(iterator->getType() == LIQUID){ // Use funtion get type, to retrieved the type of container
+        id_liquid += std::to_string(iterator->getId());
+        id_liquid += " ";
+      }
+    }
+    ship_data << "\t\t" << "Liquid Containers: " << id_liquid << "\n";
   }
-
-
-  ship_data << "Ship " << id << ": "<< fuel << "\n";
-  ship_data << "\t" << "Light Containers: " << id_light << "\n";
-  ship_data << "\t" << "Heavy Containers: " << id_heavy << "\n";
-  ship_data << "\t" << "Refrigerated Containers: " << id_refri << "\n";
-  ship_data << "\t" << "Liquid Containers: " << id_liquid << "\n";
 
   return ship_data.str();
 }

@@ -3,152 +3,107 @@
 #include <sstream>
 #include <iomanip>
 #include <fstream>
+#include <vector>
 #include "port.h"
 #include "ship.h"
-#include "container.h"
-#include "simpleship.h"
-
 
 using namespace std;
-
 
 int main(int argc, char* argv[]) {
     ifstream inputFile;
     ofstream outputFile;
 
-    if (argc != 3) {
-        cout << "usage: " << argv[0] << " input_file output_file\n";
-        return -1;
-    }
+    inputFile.open(argv[1]); // Opern input file
+    outputFile.open(argv[2]); // Open Output file
 
-    inputFile.open(argv[1]);
-    if (!inputFile.is_open()) {
-        cout << argv[0] << ": File \"" << argv[1] << "\" not found\n";
-        return -1;
-    }
-
-    outputFile.open(argv[2]);
-
-    // Read first line of the input file
-    string line = "", case_type = "";
-
-    // Line 1 variables
-    string number_container = "", number_ships = "", number_ports = "", number_events = "";
-    // inputFile >> number_container >> number_ships >> number_ports >> number_events;
-
-    // Case 1 variables
-    string case_id_port = "", case_weight = "", case_type_container = "";
-
-    // Case 2 variables
-    string case_total_weight = "", case_maxNumberOfAllContainers = "", case_maxNumberOfHeavyContainers = "", 
-    case_maxNumberOfRefrigeratedContainers = "", case_maxNumberOfLiquidContainers = "", case_fuelConsumptionPerKM = "";
+    int case_type; // Read first line of the input file
     
-    // Case 3 variables
-    string case_x = "", case_y = "";
-
-    // Case 4 variables
-    string case_id_ship = "", case_id_container = "";
-
-    // Case 7 variables
-    string case_amount_fuel  = "";
+    int container_number_C, ships_number_S, port_number_P, number_events_N; // Line 1 variables
     
-    getline(inputFile, line);
-    cout << "Priemra linea " << line <<"\n";
-    while (getline(inputFile, line)) {
+    int case_id_port, case_weight; 
+    char case_type_container; // Case 1 variables
+
+    int case_total_weight, case_maxNumberOfAllContainers, case_maxNumberOfHeavyContainers, 
+    case_maxNumberOfRefrigeratedContainers, case_maxNumberOfLiquidContainers;
+    double case_fuelConsumptionPerKM; // Case 2 variables
         
-        cout << line << "\n";
-        stringstream readLine(line); // definir variables, es necesario que este vacio?
-        readLine >> case_type;
+    double case_x, case_y; // Case 3 variables
+    
+    int case_id_ship, case_id_container; // Case 4 variables
 
-        if(case_type == "1")
-        {
-            readLine >> case_id_port >> case_weight >> case_type_container;
-            outputFile << "1 " << case_id_port << " " << case_weight << " " << case_type_container << "\n";
+    double case_amount_fuel; // Case 7 variables
+    
+    inputFile >> container_number_C >> ships_number_S >> port_number_P >> number_events_N; // Read first line, var for vectors
 
-            // Los tipos válidos son B, R y L. R indica que es un contenedor refrigerado, 
-            // mientras que L indica que es un contenedor líquido. Caso espacial es B, el tipo 
-            // de contenedor que se creará dependerá del peso del contenedor. Si es peso es
-            // menor o igual a 3000, se crea un contenedor ligero; si es mayo, se crea un contenedor pesado. 
-            // Toma en cuenta que el identificador del contenedor será el orden de creación. 
-            // Por ejemplo, el primer contenedor creado debe tener Id 0 y debe colocarse en la posición 0 del vector.
+    vector<Container*> Container_0(container_number_C);
+    vector<Ship*> Ship_0(ships_number_S);
+    vector<Port*> Port_0(port_number_P);
 
-        } else if (case_type == "2")
-        {
-            readLine >> case_id_port >> case_total_weight >> case_maxNumberOfAllContainers >> case_maxNumberOfHeavyContainers >> 
-            case_maxNumberOfRefrigeratedContainers >> case_maxNumberOfLiquidContainers >> case_fuelConsumptionPerKM;
+    // Iterators
+    int countPort = 0, countContainer = 0, countShip = 0;
 
-            outputFile << "2 " << case_id_port << " " << case_total_weight << " " << case_maxNumberOfAllContainers << " " << case_maxNumberOfHeavyContainers << " " 
-            << case_maxNumberOfRefrigeratedContainers << " " << case_maxNumberOfLiquidContainers << " " << case_fuelConsumptionPerKM << "\n";
+    for(int i = 0; i < number_events_N; i++){
+        inputFile >> case_type;
+        switch (case_type){
+        
+            case 1: inputFile >> case_id_port >> case_weight >> case_type_container;
+                if(case_type_container == 'R'){
+                    Container_0[countContainer] = new RefrigeratedContainer(countContainer, case_weight); // Add container to vector
+                    Port_0[case_id_port] -> add(Container_0[countContainer]);
 
+                } else if(case_type_container == 'L'){
+                    Container_0[countContainer] = new LiquidContainer(countContainer, case_weight); // Add container to vector
+                    Port_0[case_id_port] -> add(Container_0[countContainer]);
+
+                } else{
+                    if(case_weight <= 3000){
+                        Container_0[countContainer] = new LightContainer(countContainer, case_weight); // Add container to vector
+                        Port_0[case_id_port] -> add(Container_0[countContainer]);
+
+                    }else{
+                        Container_0[countContainer] = new HeavyContainer(countContainer, case_weight); // Add container to vector
+                        Port_0[case_id_port] -> add(Container_0[countContainer]);
+
+                    }
+                }
+                countContainer++;
+            break;
             
-        }else if (case_type == "3")
-        {
-            readLine >> case_x >> case_y;
-            outputFile << "3 " << case_x << " " << case_y << "\n";
 
-        }else if (case_type == "4")
-        {
-            readLine >> case_id_ship >> case_id_container;
-            outputFile << "4 " << case_id_ship << " " << case_id_container << "\n";
+            case 2: inputFile >> case_id_port >> case_total_weight >> case_maxNumberOfAllContainers >> case_maxNumberOfHeavyContainers >> case_maxNumberOfRefrigeratedContainers >> case_maxNumberOfLiquidContainers >> case_fuelConsumptionPerKM;
+                Ship_0[countShip] = new Ship(countShip, Port_0[case_id_port], case_total_weight, case_maxNumberOfAllContainers, case_maxNumberOfHeavyContainers, case_maxNumberOfRefrigeratedContainers, case_maxNumberOfLiquidContainers, case_fuelConsumptionPerKM);
+                countShip++;
+            break;
 
-        }else if (case_type == "5")
-        {
-            readLine >> case_id_ship >> case_id_container;
-            outputFile << "5 " << case_id_ship << " " << case_id_container << "\n";
+            case 3: inputFile >> case_x >> case_y;
+                Port_0[countPort] = new Port(countPort, case_x, case_y);
+                countPort++;
+            break;
 
-        }else if (case_type == "6")
-        {
-            readLine >> case_id_ship >> case_id_port;
-            outputFile << "6 " << case_id_ship << " " << case_id_port << "\n";
+            case 4: inputFile >> case_id_ship >> case_id_container;
+                Ship_0[case_id_ship] ->load(Container_0[case_id_container]);
+            break;
 
-        }else if (case_type == "7")
-        {
-            readLine >> case_id_ship >> case_amount_fuel;
-            outputFile << "7 " << case_id_ship << " " << case_amount_fuel << "\n";
+            case 5: inputFile >> case_id_ship >> case_id_container;
+                Ship_0[case_id_ship] ->unLoad(Container_0[case_id_container]);
+            break;
 
-        } else {
-            return 0;
-        }
-    } return 0;
+            case 6: inputFile >> case_id_ship >> case_id_port;
+                Ship_0[case_id_ship] -> sailTo(Port_0[case_id_port]);
+            break;
+
+            case 7: inputFile >> case_id_ship >> case_amount_fuel;
+                Ship_0[case_id_ship] -> reFuel(case_amount_fuel);
+            break;
+        };
+    };
     
+    for(Port* case_port:Port_0){
+        outputFile << case_port->toString();
+    };
 
-
-
-
-    
-
-    // for(int i = 1; i < number_events; i++){
-    //     inputFile >> type_event;
-
-    //     switch (type_event)
-    //     {
-    //     case 1:
-
-    //     case 2:
-
-    //     case 3:
-
-    //         break;
-    //     case 4:
-
-    //         break;
-    //     case 5:
-
-    //         break;
-    //     case 6:
-
-    //         break;
-    //     case 7:
-
-    //         break;
-    // }     
-    // }
-
-    outputFile << number_events;
-    
     inputFile.close();
     outputFile.close();
-
     
     return 0;
 }
